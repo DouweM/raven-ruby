@@ -30,7 +30,7 @@ module Raven
       @configuration = options[:configuration] || Raven.configuration
       @interfaces = {}
 
-      context = options[:context] || Raven.context
+      context = options[:context] || Context.current
 
       @id = options[:id] || UUIDTools::UUID.random_create.hexdigest
       @message = options[:message]

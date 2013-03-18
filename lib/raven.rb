@@ -26,13 +26,6 @@ module Raven
     # values for all Raven configuration options. See Raven::Configuration.
     attr_writer :configuration
 
-    # Additional context for events
-    attr_writer :context
-
-    def context
-      @context ||= Context.new
-    end
-
     def logger
       @logger ||= Logger.new
     end
@@ -124,7 +117,7 @@ module Raven
     # @example
     #   Raven.user_context('id' => 1, 'email' => 'foo@example.com')
     def user_context(options={})
-      self.context.user.merge!(options)
+      Context.current.user.merge!(options)
     end
 
     # Bind tags context. Merges with existing context (if any).
@@ -135,7 +128,7 @@ module Raven
     # @example
     #   Raven.tags_context('my_custom_tag' => 'tag_value')
     def tags_context(options={})
-      self.context.tags.merge!(options)
+      Context.current.tags.merge!(options)
     end
 
     # Bind extra context. Merges with existing context (if any).
@@ -145,7 +138,7 @@ module Raven
     # @example
     #   Raven.tags_context('my_custom_data' => 'value')
     def extra_context(options={})
-      self.context.extra.merge!(options)
+      Context.current.extra.merge!(options)
     end
 
     # For cross-language compat
